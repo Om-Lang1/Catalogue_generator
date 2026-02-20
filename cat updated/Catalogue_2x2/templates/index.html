@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catalogue 2x2 - Database Viewer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            margin-top: 20px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+        
+        th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.9em;
+            letter-spacing: 0.5px;
+        }
+        
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        tr:hover {
+            background: #f8f9ff;
+        }
+        
+        .no-data {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+            font-size: 1.2em;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .stat-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px 30px;
+            border-radius: 10px;
+            text-align: center;
+            min-width: 150px;
+            margin: 10px;
+        }
+        
+        .stat-box h3 {
+            font-size: 2em;
+            margin-bottom: 5px;
+        }
+        
+        .stat-box p {
+            opacity: 0.9;
+        }
+        
+        .nav-links {
+            text-align: center;
+            padding: 20px;
+            background: #f8f9fa;
+        }
+        
+        .nav-links a {
+            display: inline-block;
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s;
+            margin: 0 10px;
+        }
+        
+        .nav-links a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 Catalogue 2x2</h1>
+            <p>Database Viewer - Style Master Data</p>
+        </div>
+        
+        <div class="nav-links">
+            <a href="/catalogue">📋 Go to Catalogue Generator</a>
+            <a href="/api/data">📊 View JSON Data</a>
+        </div>
+        
+        <div class="content">
+            <div class="stats">
+                <div class="stat-box">
+                    <h3>{{ data|length }}</h3>
+                    <p>Total Records</p>
+                </div>
+                <div class="stat-box">
+                    <h3>{{ columns|length }}</h3>
+                    <p>Columns</p>
+                </div>
+            </div>
+            
+            {% if data %}
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            {% for column in columns %}
+                            <th>{{ column }}</th>
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in data %}
+                        <tr>
+                            {% for column in columns %}
+                            <td>{{ row[column] }}</td>
+                            {% endfor %}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="no-data">
+                <p>No data found in the database</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
